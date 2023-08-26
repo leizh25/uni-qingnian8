@@ -6,7 +6,7 @@
 		</view>
 		<view class="content">
 			<view class="row" v-for="(item,index) in 10" :key="index">
-				<NewsBox></NewsBox>
+				<NewsBox ></NewsBox>
 			</view>
 		</view>
 	</view>

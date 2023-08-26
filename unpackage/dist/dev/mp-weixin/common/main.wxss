@@ -14,7 +14,9 @@
 
 
 /*每个页面公共css */
-view{
+view {
 	box-sizing: border-box;
 }
+
+
 

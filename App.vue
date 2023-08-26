@@ -18,12 +18,5 @@
 		box-sizing: border-box;
 	}
 
-	.content {
-		padding: 30rpx;
-
-		.row {
-			border-bottom: 1px dotted #efefef;
-			padding: 20rpx 0;
-		}
-	}
+	
 </style>

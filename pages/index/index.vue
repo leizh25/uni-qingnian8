@@ -1,11 +1,12 @@
 <template>
 	<view class="home">
 		<scroll-view scroll-x class="navscroll" show-scrollbar="false">
-			<view class="item" :class="{active:index == navIndex}" v-for="(item,index) in 10" :key="index" @click="clickNav(index)">国内</view>
+			<view class="item" :class="{active:index == navIndex}" v-for="(item,index) in 10" :key="index"
+				@click="clickNav(index)">国内</view>
 
 		</scroll-view>
 		<view class="content">
-			<view class="row" v-for="(item,index) in 10" :key="index">
+			<view class="row" v-for="(item,index) in 10" :key="index" @click="goDetail">
 				<NewsBox></NewsBox>
 			</view>
 		</view>
@@ -16,16 +17,21 @@
 	export default {
 		data() {
 			return {
-				navIndex:0
+				navIndex: 0
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-		clickNav(index){
-			this.navIndex = index
-		}
+			clickNav(index) {
+				this.navIndex = index
+			},
+			goDetail(){
+				uni.navigateTo({
+					url:"/pages/detail/detail"
+				})
+			}
 		}
 	}
 </script>
@@ -59,7 +65,8 @@
 			line-height: 100rpx;
 			padding: 0 30rpx;
 			color: #333;
-			&.active{
+
+			&.active {
 				color: #31C27F;
 			}
 		}
@@ -68,6 +75,7 @@
 	.content {
 		padding: 30rpx;
 		padding-top: 130rpx;
+
 		.row {
 			border-bottom: 1px dotted #efefef;
 			padding: 20rpx 0;

@@ -1,13 +1,13 @@
 <template>
 	<view class="home">
 		<scroll-view scroll-x class="navscroll" show-scrollbar="false">
-			<view class="item" :class="{active:index == navIndex}" v-for="(item,index) in 10" :key="index"
-				@click="clickNav(index)">国内</view>
+			<view class="item" :class="{active:index == navIndex}" v-for="(item,index) in navArr" :key="index"
+				@click="clickNav(index)">{{item.classname}}</view>
 
 		</scroll-view>
 		<view class="content">
-			<view class="row" v-for="(item,index) in 10" :key="index" @click="goDetail">
-				<NewsBox></NewsBox>
+			<view class="row" v-for="(item,index) in newsArr" :key="index" @click="goDetail">
+				<NewsBox :item="item"></NewsBox>
 			</view>
 		</view>
 	</view>
@@ -17,19 +17,46 @@
 	export default {
 		data() {
 			return {
-				navIndex: 0
+				navIndex: 0,
+				navArr:[],
+				newsArr:[]
 			}
 		},
 		onLoad() {
-
+			this.getNavData(),
+			this.getNewsDara()
 		},
 		methods: {
 			clickNav(index) {
 				this.navIndex = index
 			},
-			goDetail(){
+			goDetail() {
 				uni.navigateTo({
-					url:"/pages/detail/detail"
+					url: "/pages/detail/detail"
+				})
+			},
+			//获取导航列表数据
+			getNavData() {
+				uni.request({
+					url: "https://ku.qingnian8.com/dataApi/news/navlist.php",
+					success: res => {
+						// console.log(res);
+						this.navArr = res.data
+					}
+				})
+			},
+			//获取新闻列表
+			getNewsDara(){
+				uni.request({
+					url:"https://ku.qingnian8.com/dataApi/news/newslist.php",
+					data:{
+						cid:this.navIndex,
+						num:3
+					},
+					success: (res) => {
+						// console.log(res);
+						this.newsArr = res.data
+					}
 				})
 			}
 		}

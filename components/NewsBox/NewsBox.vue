@@ -1,7 +1,7 @@
 <template>
 	<view class="newsBox">
 		<view class="pic">
-			<image :src="item.picUrl" mode="aspectFill"></image>
+			<image :src="item.picurl" mode="aspectFill"></image>
 		</view>
 		<view class="text">
 			<view class="title">{{item.title}}</view>
@@ -32,7 +32,7 @@
 						title: "组件内默认标题",
 						author: "张三",
 						hits: 998,
-						picUrl: "../../static/images/nopic.jpg",
+						picurl: "../../static/images/nopic.jpg",
 						// lookTime:"2023-08-26 12:34:56"
 					}
 				}

@@ -151,7 +151,7 @@ var _default2 = {
           title: "组件内默认标题",
           author: "张三",
           hits: 998,
-          picUrl: "../../static/images/nopic.jpg"
+          picurl: "../../static/images/nopic.jpg"
           // lookTime:"2023-08-26 12:34:56"
         };
       }

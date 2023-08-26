@@ -182,10 +182,14 @@ exports.default = void 0;
 var _default = {
   data: function data() {
     return {
-      navIndex: 0
+      navIndex: 0,
+      navArr: [],
+      newsArr: []
     };
   },
-  onLoad: function onLoad() {},
+  onLoad: function onLoad() {
+    this.getNavData(), this.getNewsDara();
+  },
   methods: {
     clickNav: function clickNav(index) {
       this.navIndex = index;
@@ -193,6 +197,32 @@ var _default = {
     goDetail: function goDetail() {
       uni.navigateTo({
         url: "/pages/detail/detail"
+      });
+    },
+    //获取导航列表数据
+    getNavData: function getNavData() {
+      var _this = this;
+      uni.request({
+        url: "https://ku.qingnian8.com/dataApi/news/navlist.php",
+        success: function success(res) {
+          // console.log(res);
+          _this.navArr = res.data;
+        }
+      });
+    },
+    //获取新闻列表
+    getNewsDara: function getNewsDara() {
+      var _this2 = this;
+      uni.request({
+        url: "https://ku.qingnian8.com/dataApi/news/newslist.php",
+        data: {
+          cid: this.navIndex,
+          num: 3
+        },
+        success: function success(res) {
+          // console.log(res);
+          _this2.newsArr = res.data;
+        }
       });
     }
   }

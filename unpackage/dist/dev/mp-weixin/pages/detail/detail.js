@@ -200,7 +200,15 @@ var _default = {
         looktime: (0, _tool.parseTime)(Date.now()),
         title: this.detail.title
       };
+      if (historyArr.length > 0) {
+        var index = historyArr.findIndex(function (item1) {
+          return item1.id == item.id;
+        });
+        console.log("index: ", index);
+        if (index > -1) historyArr.splice(index, 1);
+      }
       historyArr.unshift(item);
+      // historyArr = historyArr.slice(0,10)
       uni.setStorageSync("historyArr", historyArr);
     }
   }

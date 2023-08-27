@@ -125,6 +125,15 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = _vm.listArr.length
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+      },
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -178,13 +187,21 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   data: function data() {
     return {
       listArr: []
     };
   },
-  onLoad: function onLoad() {
+  onShow: function onShow() {
     this.getData();
   },
   methods: {
@@ -197,6 +214,11 @@ var _default = {
     getData: function getData() {
       this.listArr = uni.getStorageSync("historyArr") || [];
       console.log(this.listArr);
+    },
+    //清除历史记录
+    clearHis: function clearHis() {
+      uni.removeStorageSync("historyArr");
+      this.getData();
     }
   }
 };

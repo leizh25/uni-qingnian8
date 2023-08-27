@@ -29,7 +29,7 @@
 				newsArr: [],
 				currentPage: 1,
 				allLoaded: false,
-				loading:0  //0默认  1 加载中  2没有更多了
+				loading: 0 //0默认  1 加载中  2没有更多了
 			}
 		},
 		onLoad() {
@@ -113,6 +113,13 @@
 		}
 
 		/* #endif */
+		::-webkit-scrollbar {
+			display: none;
+			width: 0 !important;
+			height: 0 !important;
+			-webkit-appearance: none;
+			background: transparent;
+		}
 
 		.item {
 			font-size: 40rpx;
@@ -151,6 +158,6 @@
 		font-size: 26rpx;
 		color: #888;
 		line-height: 2em;
-		
+
 	}
 </style>

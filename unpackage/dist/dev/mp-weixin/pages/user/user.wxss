@@ -26,9 +26,13 @@
 /* 文章场景相关 */
 .user .top {
   padding: 50rpx 0;
+  padding-bottom: 0;
   background-color: #f8f8f8;
   color: #666;
   text-align: center;
+}
+.user .top .btn {
+  margin-right: 30rpx;
 }
 .user .top image {
   width: 150rpx;
@@ -38,11 +42,24 @@
   font-size: 38rpx;
   padding-top: 20rpx;
 }
+.user .btn_box {
+  text-align: right;
+}
 .user .content {
   padding: 30rpx;
 }
 .user .content .row {
   border-bottom: 1px dotted #efefef;
   padding: 20rpx 0;
+}
+.user .nohis {
+  text-align: center;
+}
+.user .nohis image {
+  width: 400rpx;
+}
+.user .nohis .text {
+  font-size: 26rpx;
+  color: #888;
 }
 

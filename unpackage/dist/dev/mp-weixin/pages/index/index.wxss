@@ -42,6 +42,13 @@
   background: transparent;
   color: transparent;
 }
+.navscroll.data-v-57280228 ::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+  -webkit-appearance: none;
+  background: transparent;
+}
 .navscroll .item.data-v-57280228 {
   font-size: 40rpx;
   display: inline-block;

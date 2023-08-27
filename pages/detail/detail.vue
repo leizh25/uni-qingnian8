@@ -14,7 +14,9 @@
 </template>
 
 <script>
-	import {parseTime} from "@/utils/tool.js"
+	import {
+		parseTime
+	} from "@/utils/tool.js"
 	console.log(parseTime(1786674746723));
 	export default {
 		data() {
@@ -35,14 +37,29 @@
 					data: this.options,
 					success: (res) => {
 						console.log(res);
-						res.data.content = res.data.content.replace(/<img/gi,"<img style='max-width:100%'")
-						res.data.posttime = parseTime(res.data.posttime,"{y}-{m}-{d} {h}:{i}:{s}")
+						res.data.content = res.data.content.replace(/<img/gi, "<img style='max-width:100%'")
+						res.data.posttime = parseTime(res.data.posttime, "{y}-{m}-{d} {h}:{i}:{s}")
 						this.detail = res.data
 						uni.setNavigationBarTitle({
-							title:this.detail.title
+							title: this.detail.title
 						})
+
+						//存储历史记录
+						this.saveHistory()
 					}
 				})
+			},
+			saveHistory() {
+				const historyArr = uni.getStorageSync("historyArr") || []
+				const item = {
+					id: this.detail.id,
+					classid: this.detail.classid,
+					picurl: this.detail.picurl,
+					looktime: parseTime(Date.now()),
+					title:this.detail.title
+				}
+				historyArr.unshift(item)
+				uni.setStorageSync("historyArr", historyArr)
 			}
 		}
 
@@ -70,7 +87,7 @@
 
 		.content {
 			padding-bottom: 50rpx;
-			
+
 		}
 
 		.description {

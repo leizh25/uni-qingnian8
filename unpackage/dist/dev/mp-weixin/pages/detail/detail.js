@@ -185,8 +185,23 @@ var _default = {
           uni.setNavigationBarTitle({
             title: _this.detail.title
           });
+
+          //存储历史记录
+          _this.saveHistory();
         }
       });
+    },
+    saveHistory: function saveHistory() {
+      var historyArr = uni.getStorageSync("historyArr") || [];
+      var item = {
+        id: this.detail.id,
+        classid: this.detail.classid,
+        picurl: this.detail.picurl,
+        looktime: (0, _tool.parseTime)(Date.now()),
+        title: this.detail.title
+      };
+      historyArr.unshift(item);
+      uni.setStorageSync("historyArr", historyArr);
     }
   }
 };

@@ -6,7 +6,7 @@
 
 		</scroll-view>
 		<view class="content">
-			<view class="row" v-for="(item,index) in newsArr" :key="index" @click="goDetail">
+			<view class="row" v-for="(item,index) in newsArr" :key="index" @click="goDetail(item)">
 				<NewsBox :item="item"></NewsBox>
 			</view>
 		</view>
@@ -50,9 +50,10 @@
 				this.allLoaded = false
 				this.getNewsData(id)
 			},
-			goDetail() {
+			goDetail(item) {
+				console.log(item);
 				uni.navigateTo({
-					url: "/pages/detail/detail"
+					url: `/pages/detail/detail?cid=${item.classid}&id=${item.id}`
 				})
 			},
 			//获取导航列表数据

@@ -22,17 +22,27 @@
 			return {
 				navIndex: 0,
 				navArr: [],
-				newsArr: []
+				newsArr: [],
+				currentPage:1,
+				allLoaded:false
 			}
 		},
 		onLoad() {
 			this.getNavData(),
 				this.getNewsData()
 		},
+		onReachBottom() {
+			console.log("到底了哦");
+			this.currentPage ++
+			this.allLoaded || this.getNewsData()
+		},
 		methods: {
 			clickNav(index, id) {
 				this.navIndex = index
 				console.log("id: ", id);
+				this.newsArr = []
+				this.currentPage = 1
+				this.allLoaded = false
 				this.getNewsData(id)
 			},
 			goDetail() {
@@ -44,7 +54,6 @@
 			getNavData() {
 				uni.request({
 					url: "https://ku.qingnian8.com/dataApi/news/navlist.php",
-
 					success: res => {
 						// console.log(res);
 						this.navArr = res.data
@@ -57,11 +66,13 @@
 					url: "https://ku.qingnian8.com/dataApi/news/newslist.php",
 					data: {
 						cid: id || this.navIndex,
-						num: 3
+						num: 10,
+						page:this.currentPage
 					},
 					success: (res) => {
-						// console.log(res);
-						this.newsArr = res.data
+						console.log(res);
+						if (res.data.length == 0) this.allLoaded = true
+						this.newsArr = this.newsArr.concat(res.data)
 					}
 				})
 			}

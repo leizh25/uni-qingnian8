@@ -2,13 +2,16 @@
 	<view class="home">
 		<scroll-view scroll-x class="navscroll" show-scrollbar="false">
 			<view class="item" :class="{active:index == navIndex}" v-for="(item,index) in navArr" :key="index"
-				@click="clickNav(index)">{{item.classname}}</view>
+				@click="clickNav(index,item.id)">{{item.classname}}</view>
 
 		</scroll-view>
 		<view class="content">
 			<view class="row" v-for="(item,index) in newsArr" :key="index" @click="goDetail">
 				<NewsBox :item="item"></NewsBox>
 			</view>
+		</view>
+		<view class="noData" v-if="!newsArr.length">
+			<image src="../../static/images/nodata.png" mode="widthFix"></image>
 		</view>
 	</view>
 </template>
@@ -18,17 +21,19 @@
 		data() {
 			return {
 				navIndex: 0,
-				navArr:[],
-				newsArr:[]
+				navArr: [],
+				newsArr: []
 			}
 		},
 		onLoad() {
 			this.getNavData(),
-			this.getNewsDara()
+				this.getNewsData()
 		},
 		methods: {
-			clickNav(index) {
+			clickNav(index, id) {
 				this.navIndex = index
+				console.log("id: ", id);
+				this.getNewsData(id)
 			},
 			goDetail() {
 				uni.navigateTo({
@@ -39,6 +44,7 @@
 			getNavData() {
 				uni.request({
 					url: "https://ku.qingnian8.com/dataApi/news/navlist.php",
+
 					success: res => {
 						// console.log(res);
 						this.navArr = res.data
@@ -46,12 +52,12 @@
 				})
 			},
 			//获取新闻列表
-			getNewsDara(){
+			getNewsData(id) {
 				uni.request({
-					url:"https://ku.qingnian8.com/dataApi/news/newslist.php",
-					data:{
-						cid:this.navIndex,
-						num:3
+					url: "https://ku.qingnian8.com/dataApi/news/newslist.php",
+					data: {
+						cid: id || this.navIndex,
+						num: 3
 					},
 					success: (res) => {
 						// console.log(res);
@@ -106,6 +112,14 @@
 		.row {
 			border-bottom: 1px dotted #efefef;
 			padding: 20rpx 0;
+		}
+	}
+
+	.noData {
+		text-align: center;
+		image {
+			width: 360rpx;
+
 		}
 	}
 </style>

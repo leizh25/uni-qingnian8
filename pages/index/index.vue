@@ -13,6 +13,10 @@
 		<view class="noData" v-if="!newsArr.length">
 			<image src="../../static/images/nodata.png" mode="widthFix"></image>
 		</view>
+		<view class="loading" v-if="newsArr.length">
+			<view v-if="loading == 1">数据加载中...</view>
+			<view v-if="loading == 2">没有更多了</view>
+		</view>
 	</view>
 </template>
 
@@ -23,8 +27,9 @@
 				navIndex: 0,
 				navArr: [],
 				newsArr: [],
-				currentPage:1,
-				allLoaded:false
+				currentPage: 1,
+				allLoaded: false,
+				loading:0  //0默认  1 加载中  2没有更多了
 			}
 		},
 		onLoad() {
@@ -33,13 +38,13 @@
 		},
 		onReachBottom() {
 			console.log("到底了哦");
-			this.currentPage ++
+			this.currentPage++
 			this.allLoaded || this.getNewsData()
 		},
 		methods: {
 			clickNav(index, id) {
 				this.navIndex = index
-				console.log("id: ", id);
+				// console.log("id: ", id);
 				this.newsArr = []
 				this.currentPage = 1
 				this.allLoaded = false
@@ -62,16 +67,21 @@
 			},
 			//获取新闻列表
 			getNewsData(id) {
+				this.loading = 1
 				uni.request({
 					url: "https://ku.qingnian8.com/dataApi/news/newslist.php",
 					data: {
 						cid: id || this.navIndex,
 						num: 10,
-						page:this.currentPage
+						page: this.currentPage
 					},
 					success: (res) => {
-						console.log(res);
-						if (res.data.length == 0) this.allLoaded = true
+						// console.log(res);
+						this.loading = 0
+						if (res.data.length == 0) {
+							this.allLoaded = true
+							this.loading = 2
+						}
 						this.newsArr = this.newsArr.concat(res.data)
 					}
 				})
@@ -128,9 +138,18 @@
 
 	.noData {
 		text-align: center;
+
 		image {
 			width: 360rpx;
 
 		}
+	}
+
+	.loading {
+		text-align: center;
+		font-size: 26rpx;
+		color: #888;
+		line-height: 2em;
+		
 	}
 </style>

@@ -101,7 +101,7 @@ var components
 try {
   components = {
     NewsBox: function () {
-      return __webpack_require__.e(/*! import() | components/NewsBox/NewsBox */ "components/NewsBox/NewsBox").then(__webpack_require__.bind(null, /*! @/components/NewsBox/NewsBox.vue */ 50))
+      return __webpack_require__.e(/*! import() | components/NewsBox/NewsBox */ "components/NewsBox/NewsBox").then(__webpack_require__.bind(null, /*! @/components/NewsBox/NewsBox.vue */ 58))
     },
   }
 } catch (e) {

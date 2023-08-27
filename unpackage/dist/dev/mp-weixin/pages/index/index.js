@@ -101,7 +101,7 @@ var components
 try {
   components = {
     NewsBox: function () {
-      return __webpack_require__.e(/*! import() | components/NewsBox/NewsBox */ "components/NewsBox/NewsBox").then(__webpack_require__.bind(null, /*! @/components/NewsBox/NewsBox.vue */ 50))
+      return __webpack_require__.e(/*! import() | components/NewsBox/NewsBox */ "components/NewsBox/NewsBox").then(__webpack_require__.bind(null, /*! @/components/NewsBox/NewsBox.vue */ 58))
     },
   }
 } catch (e) {
@@ -125,6 +125,17 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = _vm.newsArr.length
+  var g1 = _vm.newsArr.length
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+        g1: g1,
+      },
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -179,24 +190,45 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   data: function data() {
     return {
       navIndex: 0,
       navArr: [],
-      newsArr: []
+      newsArr: [],
+      currentPage: 1,
+      allLoaded: false,
+      loading: 0 //0默认  1 加载中  2没有更多了
     };
   },
   onLoad: function onLoad() {
-    this.getNavData(), this.getNewsDara();
+    this.getNavData(), this.getNewsData();
+  },
+  onReachBottom: function onReachBottom() {
+    console.log("到底了哦");
+    this.currentPage++;
+    this.allLoaded || this.getNewsData();
   },
   methods: {
-    clickNav: function clickNav(index) {
+    clickNav: function clickNav(index, id) {
       this.navIndex = index;
+      // console.log("id: ", id);
+      this.newsArr = [];
+      this.currentPage = 1;
+      this.allLoaded = false;
+      this.getNewsData(id);
     },
-    goDetail: function goDetail() {
+    goDetail: function goDetail(item) {
+      console.log(item);
       uni.navigateTo({
-        url: "/pages/detail/detail"
+        url: "/pages/detail/detail?cid=".concat(item.classid, "&id=").concat(item.id)
       });
     },
     //获取导航列表数据
@@ -211,17 +243,24 @@ var _default = {
       });
     },
     //获取新闻列表
-    getNewsDara: function getNewsDara() {
+    getNewsData: function getNewsData(id) {
       var _this2 = this;
+      this.loading = 1;
       uni.request({
         url: "https://ku.qingnian8.com/dataApi/news/newslist.php",
         data: {
-          cid: this.navIndex,
-          num: 3
+          cid: id || this.navIndex,
+          num: 10,
+          page: this.currentPage
         },
         success: function success(res) {
           // console.log(res);
-          _this2.newsArr = res.data;
+          _this2.loading = 0;
+          if (res.data.length == 0) {
+            _this2.allLoaded = true;
+            _this2.loading = 2;
+          }
+          _this2.newsArr = _this2.newsArr.concat(res.data);
         }
       });
     }

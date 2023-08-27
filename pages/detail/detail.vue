@@ -14,6 +14,8 @@
 </template>
 
 <script>
+	import {parseTime} from "@/utils/tool.js"
+	console.log(parseTime(1786674746723));
 	export default {
 		data() {
 			return {
@@ -33,7 +35,12 @@
 					data: this.options,
 					success: (res) => {
 						console.log(res);
+						res.data.content = res.data.content.replace(/<img/gi,"<img style='max-width:100%'")
+						res.data.posttime = parseTime(res.data.posttime,"{y}-{m}-{d} {h}:{i}:{s}")
 						this.detail = res.data
+						uni.setNavigationBarTitle({
+							title:this.detail.title
+						})
 					}
 				})
 			}
@@ -63,9 +70,7 @@
 
 		.content {
 			padding-bottom: 50rpx;
-			/deep/ img{
-				max-width: 100%;
-			}
+			
 		}
 
 		.description {

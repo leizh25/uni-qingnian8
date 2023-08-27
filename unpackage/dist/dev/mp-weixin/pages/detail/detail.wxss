@@ -48,6 +48,6 @@
   font-size: 26rpx;
   padding: 20rpx;
   color: #f89898;
-  line-height: 1,8em;
+  line-height: 1, 8em;
 }
 
